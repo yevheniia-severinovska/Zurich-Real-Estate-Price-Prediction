@@ -1,17 +1,15 @@
-import pandas as pd             # pandas - data handling
-import streamlit as st          # streamlit - web app UI
-import matplotlib.pyplot as plt # matplotlib - plotting charts
-import numpy as np              # numpy - math and modeling
+import pandas as pd             # data handling
+import streamlit as st          # web app UI
+import matplotlib.pyplot as plt # plotting charts
+import numpy as np              # math and modeling
 
-# Load the cleaned CSV file into a pandas DataFrame so we can easily manipulate it with pandas methods
+# Load data into a DataFrame for easy filtering and analysis
 df = pd.read_csv("clean_zurich_data.csv")
 
-# Set the app title using Streamlit to show what the project is about
 st.title("🏡 Zurich Condo Price Trends (2009–2026)")
 
 # --- Step 1: Prepare district list for sidebar selection ---
 
-# Custom display list with nesting to group subdistricts under each Kreis
 district_display = [
     "Zurich (Total)",
     "Kreis 1", " • Rathaus", " • Lindenhof",
@@ -31,26 +29,24 @@ district_display = [
 # Get a list of districts from the dataset to validate which ones are available
 available_districts = df['district'].unique().tolist()
 
-# Create a map to connect display names with actual district names for filtering later
-display_to_actual = {d: d for d in available_districts}
+display_to_actual = {d: d for d in available_districts} # Dictionary(hash-map) with csv&displayed names
 
-# Build the final display list and keep only valid entries from the dataset
+# Keeping only districts from the display list that exist in the dataset to avoid invalid sidebar options
 full_display = []
 for d in district_display:
-    name = d.strip(" • ")                 # Remove bullet for comparison
-    if name in available_districts:       # This prevents errors and improves UX by not offering choices that have no data in original cleaned table
-        full_display.append(d)            # Add formatted name to sidebar list
-        display_to_actual[d] = name       # So we can later match what the user selects to the real name used in the data
+    name = d.strip(" • ")                 
+    if name in available_districts:
+        full_display.append(d)
+        display_to_actual[d] = name
 
 # Adding sidebar radio buttons to select a district from the filtered and formatted list
 selected_display = st.sidebar.radio("Select District", full_display, index=0)
 
-# Convert the selected display name back to the real name (original cleaned table) for filtering the data
+# Get the real district name for filtering
 selected_district = display_to_actual[selected_display]
 
 # --- Step 2: Filter data for selected district ---
 
-# If Zurich (Total) is selected, take all rows into account; else, filter only to selected district
 if selected_district == 'Zurich (Total)':
     df_selected = df.copy()
 else:
@@ -58,22 +54,20 @@ else:
 
 # --- Step 3: Group data by year and calculate average price per m² ---
 
-# Use groupby().mean() to group data by year and calculate average price per m² to build a yearly trend and reset_index() to convert it back to a normal table
 price_trend = df_selected.groupby("year")["price_per_m2"].mean().reset_index()
 
 # --- Step 4: Predict price for 2025–2026 using simple linear regression ---
 
-# Extract years and prices as NumPy arrays to use them in modeling
-years = price_trend['year'].values
+years = price_trend['year'].values # Extract years and prices as NumPy arrays to use them in modeling
 prices = price_trend['price_per_m2'].values
 
 # Only fit model if we have more than one data point
 if len(years) > 1:
-    # Fit a straight line using np.polyfit() with degree 1 (y = mx + b --- linear regression // 1st-degree polynomial)
+    # Fit a straight line to model the price trend over time using np.polyfit() ~ (y = mx + b --- linear regression // 1st-degree polynomial)
     coef = np.polyfit(years, prices, 1)
 
     # Create a function based on the fitted line to predict future prices
-    trend_func = np.poly1d(coef) # np.poly1d creates a polynomial function from the model coefficients
+    trend_func = np.poly1d(coef) 
 
     # Predict prices for 2025 and 2026 using the model
     future_years = np.array([2025, 2026])
@@ -92,26 +86,23 @@ if len(years) > 1:
 
     st.subheader(f"Price per m² Trend: {selected_district}") # use formatted string literal to combine string & variables
 
-    # Create a line plot with markers and labels using matplotlib
-    fig, ax = plt.subplots(figsize=(10, 5))  # Create a wide chart (10x5 inches) for clear time-based visualization
+    # Line plot setup
+    fig, ax = plt.subplots(figsize=(10, 5))
     ax.plot(full_trend['year'], full_trend['price_per_m2'], marker='o', linestyle='-', color='#4CAF50')  # Plot prices over years
-    ax.set_xlabel("Year")  # Label x-axis
-    ax.set_ylabel("Average Price per m² (CHF)")  # Label y-axis
-    ax.grid(True)  # Show grid for readability
-    st.pyplot(fig)  # Display chart in Streamlit
+    ax.set_xlabel("Year")
+    ax.set_ylabel("Average Price per m² (CHF)")
+    ax.grid(True)
+    st.pyplot(fig)
 
     # --- Step 6: Show predictions as success messages ---
 
-    # Format numbers with thousands separator and no decimals. (Turning a number like 8123.567 into: 8,124)
-    st.success(f"✅ Predicted price per m² for 2025: CHF {future_prices[0]:,.0f}")
+    st.success(f"✅ Predicted price per m² for 2025: CHF {future_prices[0]:,.0f}")  # Converting a number like 8123.567 into: 8,124)
     st.success(f"✅ Predicted price per m² for 2026: CHF {future_prices[1]:,.0f}")
 
 else:
-    # Show warning if not enough data points for prediction
     st.warning("Not enough data to predict trends for this district.")
 
 # --- Footer ---
 
-# Add horizontal line and small caption for visual finish
 st.markdown("---")
 st.caption("© 2025 - Zurich Real Estate Trends Project.")

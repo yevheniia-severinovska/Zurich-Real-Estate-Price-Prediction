@@ -1,9 +1,9 @@
 import pandas as pd
 
-# 1. Загрузить файл
-df = pd.read_csv("zurich-condos.csv")  # Убедись, что файл лежит в той же папке
+# --- Step 1: Loading the file
+df = pd.read_csv("zurich-condos.csv")  
 
-# 2. Переименовать ВСЕ нужные колонки с немецкого на английский
+# --- Step 2: GE -> EN 
 rename_dict = {
     "Stichtagdatjahr": "year",
     "DatenstandCd": "data_status_code",
@@ -23,25 +23,24 @@ rename_dict = {
 }
 df.rename(columns=rename_dict, inplace=True)
 
-# ✅ 2.5 Заменить "Ganze Stadt" на более понятное название
 df["district"] = df["district"].replace({"Ganze Stadt": "Zurich (Total)"})
 
-# 3. Привести нужные столбцы к типу float
+# --- Step 3: Columns into float type
 df["median_price"] = pd.to_numeric(df["median_price"], errors='coerce')
 df["price_per_m2"] = pd.to_numeric(df["price_per_m2"], errors='coerce')
 df["total_price"] = pd.to_numeric(df["total_price"], errors='coerce')
 
-# 4. Извлечь минимальное значение из диапазона в колонке num_units
+# --- Step 4: Bring column num_units to min value
 df["num_units_clean"] = (
     df["num_units"]
     .astype(str)
-    .str.replace("-", "–")  # Replace short hyphen with long dash
+    .str.replace("-", "–")
     .str.split("–")
     .str[0]
     .astype(float)
 )
 
-# 5. Убрать плохие строки:
+# --- Step 5: Remove irrevevant lines
 df_clean = df[
     (df["median_price"] > 0) &
     (df["price_per_m2"] > 0) &
@@ -49,7 +48,7 @@ df_clean = df[
     (df["num_units_clean"] >= 3)
 ].copy()
 
-# 6. Сохранить очищенный датасет
+# --- Step 6: Save cleaned csv
 df_clean.to_csv("clean_zurich_data.csv", index=False)
 
 print("✅ Data cleaned, renamed, types fixed, and saved successfully!")
