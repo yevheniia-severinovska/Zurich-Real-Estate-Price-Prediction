@@ -6,10 +6,8 @@ import numpy as np              # math and modeling
 # Load data into a DataFrame for easy filtering and analysis
 df = pd.read_csv("clean_zurich_data.csv")
 
-st.markdown(
-    "<h4 style='margin-top: -20px;'>🏙️ Zurich Condo Price Trends (2009–2026)</h2>",
-    unsafe_allow_html=True
-)
+st.markdown("### 🏙️ Zurich Condo Price Trends (2009–2026)")
+
 
 # --- Step 1: Prepare district list for sidebar selection ---
 
