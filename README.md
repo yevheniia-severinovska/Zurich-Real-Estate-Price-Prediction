@@ -1,9 +1,4 @@
-Zurich Real Estate Price Trends
-
-° ˛ ° ˚* _Π_____*☽*˚ ˛
-✩ ˚˛˚*/______/__＼。✩˚ ˚˛
-˚ ˛˚˛˚｜ 田田｜門｜ ˚ ˚
-´´ ̛ ̛ ´´ ´´ ´´ ̛ ̛ ´´ ´´ ´´ ̛ ̛ ´´ ´´
+🏙️ Zurich Real Estate Price Trends
 
 An interactive data app that shows average condo prices per square meter in Zurich by district and predicts prices for 2025–2026 using simple linear regression.
 
@@ -19,7 +14,7 @@ NumPy
 matplotlib
 Streamlit
 
-Files
+☁️ Files
 
 app.py
 Interactive Streamlit app. Loads cleaned data, filters by district, groups by year, applies linear regression, and plots the result.

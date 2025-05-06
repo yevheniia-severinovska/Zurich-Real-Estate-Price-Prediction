@@ -51,4 +51,4 @@ df_clean = df[
 # --- Step 6: Save cleaned csv
 df_clean.to_csv("clean_zurich_data.csv", index=False)
 
-print("✅ Data cleaned, renamed, types fixed, and saved successfully!")
+print("Data cleaned, renamed, types fixed, and saved successfully!")
