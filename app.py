@@ -7,7 +7,7 @@ import numpy as np              # math and modeling
 df = pd.read_csv("clean_zurich_data.csv")
 
 st.markdown(
-    "<h3 style='margin-top: 0;'>🏙️ Zurich Condo Price Trends (2009–2026)</h2>",
+    "<h4 style='margin-top: 0;'>🏙️ Zurich Condo Price Trends (2009–2026)</h2>",
     unsafe_allow_html=True
 )
 
