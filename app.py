@@ -84,7 +84,7 @@ if len(years) > 1:
 
     # --- Step 5: Plot the trend using matplotlib and show it in Streamlit ---
 
-    st.subheader(f"Price per m² Trend: {selected_district}") # use formatted string literal to combine string & variables
+    st.markdown(f"##### Price per m² -  {selected_district}") # use formatted string literal to combine string & variables
 
     # Line plot setup
     fig, ax = plt.subplots(figsize=(10, 5))
