@@ -1,12 +1,17 @@
 Zurich Real Estate Price Trends
 
+° ˛ ° ˚* _Π_____*☽*˚ ˛
+✩ ˚˛˚*/______/__＼。✩˚ ˚˛
+˚ ˛˚˛˚｜ 田田｜門｜ ˚ ˚
+´´ ̛ ̛ ´´ ´´ ´´ ̛ ̛ ´´ ´´ ´´ ̛ ̛ ´´ ´´
+
 An interactive data app that shows average condo prices per square meter in Zurich by district and predicts prices for 2025–2026 using simple linear regression.
 
-Overview
+☁️ Overview
 
 This project uses Python and Streamlit to explore real estate price trends across Zurich. The user can select a district and view a clean, readable chart with predictions for the next two years.
 
-Tech Stack
+☁️ Tech Stack
 
 Python
 pandas
@@ -22,7 +27,7 @@ Interactive Streamlit app. Loads cleaned data, filters by district, groups by ye
 data_cleaning.py
 Script that prepares the dataset: renames columns, handles number formatting, removes invalid rows, and outputs clean_zurich_data.csv.
 
-How It Works
+☁️ How It Works
 
 User selects a district from the sidebar
 The app filters and processes the data
@@ -34,14 +39,13 @@ How to Run
 pip install pandas numpy matplotlib streamlit
 streamlit run app.py
 
-Future Work
+☁️ Future Work
 
 Evaluate predictions
 Add a chatbot-helper
 Analyze competitors
 
-
-Author
+☁️ Author
 
 Built as a first data science project by Yevheniia Severinovska learning Python and AI tools.
 
