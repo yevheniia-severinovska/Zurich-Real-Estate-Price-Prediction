@@ -29,11 +29,6 @@ The app filters and processes the data
 A simple linear model predicts prices for 2025 and 2026
 Results are shown in a line chart and summary messages
 
-How to Run
-
-pip install pandas numpy matplotlib streamlit
-streamlit run app.py
-
 ☁️ Future Work
 
 Evaluate predictions
