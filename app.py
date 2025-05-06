@@ -6,7 +6,10 @@ import numpy as np              # math and modeling
 # Load data into a DataFrame for easy filtering and analysis
 df = pd.read_csv("clean_zurich_data.csv")
 
-st.subheader("🏙️ Zurich Condo Price Trends (2009–2026)")
+st.markdown(
+    "<h2 style='margin-top: 0;'>🏙️ Zurich Condo Price Trends (2009–2026)</h2>",
+    unsafe_allow_html=True
+)
 
 # --- Step 1: Prepare district list for sidebar selection ---
 
@@ -84,7 +87,7 @@ if len(years) > 1:
 
     # --- Step 5: Plot the trend using matplotlib and show it in Streamlit ---
 
-    st.caption(f"Price per m² -  {selected_district}") # use formatted string literal to combine string & variables
+    st.caption(f"{selected_district}") # use formatted string literal to combine string & variables
 
     # Line plot setup
     fig, ax = plt.subplots(figsize=(10, 5))
