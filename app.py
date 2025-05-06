@@ -6,7 +6,7 @@ import numpy as np              # math and modeling
 # Load data into a DataFrame for easy filtering and analysis
 df = pd.read_csv("clean_zurich_data.csv")
 
-st.title("🏙️ Zurich Condo Price Trends (2009–2026)")
+st.header("🏙️ Zurich Condo Price Trends (2009–2026)")
 
 # --- Step 1: Prepare district list for sidebar selection ---
 
