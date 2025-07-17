@@ -3,6 +3,8 @@
 
 An interactive data app that shows average condo prices per square meter in Zurich by district and predicts prices for 2025–2026 using simple linear regression.
 
+https://zurich-real-estate-price-prediction.streamlit.app/ 
+
 ## 📈 Idea
 
 One of the project’s goals was to explore how pricing trends could inform revenue potential — helping identify which timeframes or districts might offer the best return if a property were sold.
